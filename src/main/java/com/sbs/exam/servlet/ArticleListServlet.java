@@ -2,6 +2,7 @@ package com.sbs.exam.servlet;
 
 
 import com.sbs.exam.util.DBUtil;
+import com.sbs.exam.util.SecSql;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -38,8 +39,13 @@ public class ArticleListServlet extends HttpServlet {
             conn = DriverManager.getConnection(url, user, password);
             DBUtil dbUtil = new DBUtil(req,resp);
 
-            String sql = "SELECT * FROM article";
-//            List<Map<String, Object>> articleRows = dbUtil.selectRows(conn, sql);
+
+            SecSql sql = new SecSql();
+            sql.append("SELECT * FROM article");
+            List<Map<String, Object>> articleRows = dbUtil.selectRows(conn, sql);
+
+            req.setAttribute("articleRows", articleRows);
+            req.getRequestDispatcher("../article/list.jsp").forward(req, resp);
 
         } catch (SQLException e) {
             e.printStackTrace();
