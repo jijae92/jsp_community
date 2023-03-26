@@ -13,14 +13,6 @@ import java.util.Map;
 
 public class DBUtil {
 
-    private HttpServletRequest req;
-    private HttpServletResponse resp;
-
-    public DBUtil(HttpServletRequest req, HttpServletResponse resp) {
-        this.req = req;
-        this.resp = resp;
-    }
-
     public static Map<String, Object> selectRow(Connection dbConn, SecSql sql) {
         List<Map<String, Object>> rows = selectRows(dbConn, sql);
 
