@@ -41,7 +41,9 @@ public class ArticleDetailServlet extends HttpServlet {
             int id = Integer.parseInt(req.getParameter("id"));
 
             SecSql sql = new SecSql();
-            sql.append("SELECT * FROM article WHERE id = ?", id);
+            sql.append("SELECT * ");
+            sql.append("FROM article");
+            sql.append("WHERE id = ?", id);
             Map<String, Object> articleRow = DBUtil.selectRow(conn, sql);
 
             req.setAttribute("articleRow", articleRow);
