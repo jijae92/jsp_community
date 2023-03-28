@@ -1,6 +1,7 @@
 package com.sbs.exam.servlet;
 
 
+import com.sbs.exam.Rq;
 import com.sbs.exam.util.DBUtil;
 import com.sbs.exam.util.SecSql;
 import jakarta.servlet.ServletException;
@@ -13,17 +14,14 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.Map;
 
 @WebServlet("/article/doDelete")
-public class ArticleDeleteServlet extends HttpServlet {
+public class ArticleDoDeleteServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        req.setCharacterEncoding("UTF-8");
-        resp.setCharacterEncoding("UTF-8");
-        resp.setContentType("text/html; charset-utf-8");
+        Rq rq = new Rq(req, resp);
 
         // DB 연결시작
         Connection conn = null;
@@ -42,14 +40,14 @@ public class ArticleDeleteServlet extends HttpServlet {
         try {
             conn = DriverManager.getConnection(url, user, password);
 
-            int id = Integer.parseInt(req.getParameter("id"));
+            int id = rq.getIntParam("id",0);
 
             SecSql sql = new SecSql();
             sql.append("DELETE ");
             sql.append("FROM article");
             sql.append("WHERE id = ?", id);
             DBUtil.delete(conn, sql);
-            resp.getWriter().append("<script> alert('1번 글이 삭제되었습니다.'); location.replace('list'); </script>");
+            rq.appendBody(String.format("<script> alert('%d번 글이 삭제되었습니다.'); location.replace('list'); </script>",id));
 
 
         } catch (SQLException e) {
