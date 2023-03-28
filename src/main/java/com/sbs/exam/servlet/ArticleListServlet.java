@@ -70,7 +70,7 @@ public class ArticleListServlet extends HttpServlet {
             req.setAttribute("articleRows", articleRows);
             req.setAttribute("page",page);
             req.setAttribute("totalPage",totalPage);
-            req.getRequestDispatcher("../article/list.jsp").forward(req, resp);
+            rq.jsp("../article/list");
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -85,7 +85,10 @@ public class ArticleListServlet extends HttpServlet {
         }
         // DB 연결 끝
     }
-
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        doGet(req, resp);
+    }
 }
 
 

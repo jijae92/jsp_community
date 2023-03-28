@@ -1,5 +1,7 @@
 package com.sbs.exam;
 
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -42,12 +44,7 @@ public class Rq {
         if( value == null){
             return defaultValue;
         }
-        try {
-            return value;
-        }
-        catch (NumberFormatException e){
-            return defaultValue;
-        }
+        return value;
     }
     public void appendBody(String str){
         try {
@@ -57,4 +54,13 @@ public class Rq {
         }
     }
 
+    public void jsp(String jspPath) {
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher(jspPath + ".jsp");
+
+        try{
+            requestDispatcher.forward(req,resp);
+        }catch (ServletException | IOException e){
+            e.printStackTrace();
+        }
+    }
 }

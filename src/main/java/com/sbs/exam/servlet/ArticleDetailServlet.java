@@ -1,6 +1,7 @@
 package com.sbs.exam.servlet;
 
 
+import com.sbs.exam.Rq;
 import com.sbs.exam.util.DBUtil;
 import com.sbs.exam.util.SecSql;
 import jakarta.servlet.ServletException;
@@ -21,6 +22,8 @@ public class ArticleDetailServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        Rq rq = new Rq(req,resp);
+
         // DB 연결시작
         Connection conn = null;
         try {
@@ -47,7 +50,8 @@ public class ArticleDetailServlet extends HttpServlet {
             Map<String, Object> articleRow = DBUtil.selectRow(conn, sql);
 
             req.setAttribute("articleRow", articleRow);
-            req.getRequestDispatcher("../article/detail.jsp").forward(req, resp);
+            rq.jsp("../article/detail");
+//            req.getRequestDispatcher("../article/detail.jsp").forward(req, resp);
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -62,7 +66,10 @@ public class ArticleDetailServlet extends HttpServlet {
         }
         // DB 연결 끝
     }
-
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        doGet(req, resp);
+    }
 }
 
 
