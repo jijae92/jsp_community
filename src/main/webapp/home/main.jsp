@@ -1,4 +1,4 @@
-<<%@ page import="java.util.Map" %>
+<%@ page import="java.util.Map" %>
 <%@ page import="java.util.List" %><%--
   Created by IntelliJ IDEA.
   User: jijae
@@ -16,6 +16,7 @@
 <h1>메인 페이지</h1>
 <div>
     <a href="../article/list">게시물 리스트</a>
+    <a href="../member/join">회원 가입</a>
 </div>
 </body>
 </html>
